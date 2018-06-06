@@ -33,7 +33,7 @@ class BinanceWs {
       }
     }
     
-    try! ws.onClose.wait()
+//    try! ws.onClose.wait()
     
   }
   
