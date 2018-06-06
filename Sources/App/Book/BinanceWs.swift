@@ -18,12 +18,12 @@ class BinanceWs {
   
   
   func start(_ app: Application) {
-    print("start")
+    print("startdgdf ")
     
     ws = try! HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: worker).wait()
     
     ws.onText { ws, text in
-      print(text)
+//      print(text)
       let ticker = Mapper<Ticker>().map(JSONString: text)!
       
       for priceLevel in ticker.asks {
