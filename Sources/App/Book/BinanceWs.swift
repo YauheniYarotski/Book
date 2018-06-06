@@ -32,8 +32,8 @@ class BinanceWs {
         }
       }
     }
-    
-//    try! ws.onClose.wait()
+    print("exit")
+    try! ws.onClose.wait()
     
   }
   
