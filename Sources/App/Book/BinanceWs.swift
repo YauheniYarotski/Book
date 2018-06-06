@@ -14,13 +14,13 @@ class BinanceWs {
   static let shared = BinanceWs()
   
   var ws: WebSocket!
-  let worker = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+  let worker = MultiThreadedEventLoopGroup(numberOfThreads: 2)
   
   
   func start(_ app: Application) {
     print("start")
     
-    ws = try! HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: app).wait()
+    ws = try! HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: worker).wait()
     
     ws.onText { ws, text in
       print(text)
