@@ -14,7 +14,7 @@ class BinanceWs {
   static let shared = BinanceWs()
   
   var ws: WebSocket!
-  let worker = MultiThreadedEventLoopGroup(numberOfThreads: 2)
+
   
   
   func start(_ app: Application) {
@@ -40,20 +40,20 @@ class BinanceWs {
 //    // wait for the websocket to close
 //    try! done.wait()
     
-    ws = try! HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: worker).wait()
-//
-//    ws.onText { ws, text in
-////      print(text)
-//      let ticker = Mapper<Ticker>().map(JSONString: text)!
-//
-//      for priceLevel in ticker.asks {
-//        if let p = priceLevel.first as? String, let l = priceLevel[1] as? String {
-//          print("asks:", p, l)
-//        }
-//      }
-//    }
+    ws = try! HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: app).wait()
+
+    ws.onText { ws, text in
+//      print(text)
+      let ticker = Mapper<Ticker>().map(JSONString: text)!
+
+      for priceLevel in ticker.asks {
+        if let p = priceLevel.first as? String, let l = priceLevel[1] as? String {
+          print("asks:", p, l)
+        }
+      }
+    }
     print("exit")
-//    try! ws.onClose.wait()
+    try! ws.onClose.wait()
     
   }
   
