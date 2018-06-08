@@ -40,7 +40,7 @@ class BinanceWs {
 //    // wait for the websocket to close
 //    try! done.wait()
     
-//    ws = try! HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: worker).wait()
+    ws = try! HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: worker).wait()
 //    
 //    ws.onText { ws, text in
 ////      print(text)
