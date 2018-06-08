@@ -41,7 +41,7 @@ class BinanceWs {
 //    try! done.wait()
     
     ws = try! HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: worker).wait()
-//    
+//
 //    ws.onText { ws, text in
 ////      print(text)
 //      let ticker = Mapper<Ticker>().map(JSONString: text)!
