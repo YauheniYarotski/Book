@@ -18,14 +18,42 @@ import Foundation
 //  Asks [][]string `json:"a"`
 //}
 
-class Ticker: Mappable {
+enum OrderType {
+  case ask
+  case bid
+}
+
+class BinanceBookForPair: Mappable {
   var eventType: String = ""
   var timeStamp: Date = Date()
   var symbol: String = ""
   var firstId: Int = 0
   var finalId: Int = 0
-  var bids : [[Any]] = []
-  var asks : [[Any]] = []
+  var draftBids : [[Any]] = []
+  var draftAsks : [[Any]] = []
+  
+  var asks: [String: String] {
+    var asks = [String: String]()
+    for priceLevel in draftAsks {
+      if let price = priceLevel.first as? String, let quantity = priceLevel[1] as? String {
+        asks[price] = quantity
+      }
+    }
+    return asks
+  }
+  
+  var bids: [String: String] {
+    var asks = [String: String]()
+    for priceLevel in draftBids {
+      if let price = priceLevel.first as? String, let quantity = priceLevel[1] as? String {
+        asks[price] = quantity
+      }
+    }
+    return asks
+  }
+  
+  
+  
   
   init() {
   }
@@ -39,10 +67,39 @@ class Ticker: Mappable {
     symbol                <- map["s"]
     firstId               <- map["U"]
     finalId               <- map["u"]
-    bids                  <- map["b"]
-    asks                  <- map["a"]
+    draftBids                  <- map["b"]
+    draftAsks                  <- map["a"]
   }
   
+  
+  var description : String {
+    return "\(asks.count)"
+  }
+  
+  
+  
+}
+
+//struct ExchangeBook {
+//  var exchange: Exchange = .none
+//  var books: [String: PairBook] = [:]
+//}
+
+typealias ExchangeBook = [String: PairBook]
+
+struct PairBook {
+  var timeStamp: Date = Date()
+  var symbol: String = ""
+  var bids : [String: String] = [:]
+  var asks : [String: String] = [:]
+  
+}
+
+
+enum Exchange: String {
+  case binance = "Binance"
+  case bitfinex = "Bitfinex"
+  case none = "none"
 }
 
 //extension Ticker: Hashable {

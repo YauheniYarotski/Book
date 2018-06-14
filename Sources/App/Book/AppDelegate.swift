@@ -13,13 +13,21 @@ class AppDelegate {
   let binanceWs = BinanceWs()
   let app: Application
   
+  var exchangesBooks = [Exchange : ExchangeBook]()
+  
   init(_ app: Application) {
     self.app = app
   }
   
   
   func start() {
-    binanceWs.start(self.app)
+    
+    binanceWs.start(self.app) { binanceBook in
+      self.exchangesBooks[.binance] = binanceBook
+      
+      print(self.exchangesBooks[.binance]?.values)
+      
+    }
   }
   
 }

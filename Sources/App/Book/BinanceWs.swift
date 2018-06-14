@@ -11,18 +11,52 @@ import Console
 
 class BinanceWs {
   
-  let worker = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-  var ws: WebSocket?
+  var books = ExchangeBook()
   
-  func start(_ app: Application) {
+  func start(_ app: Application, onResponse:@escaping ((_ books: ExchangeBook)->())) {
     _ = HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: app).map{ ws in
-      // Set a new callback for receiving text formatted data.
       ws.onText { ws, text in
-        print("Server echo: \(text)")
+         let binanceBookForPair = Mapper<BinanceBookForPair>().map(JSONString: text)!
+        
+        
+       self.add(newBook: binanceBookForPair)
+        
+//        print(self.books[binanceBookForPair.symbol]?.asks, self.books[binanceBookForPair.symbol]?.bids)
+        onResponse(self.books)
       }
       ws.onError{ (ws, error) in
         print(error)
       }
     }
   }
+  
+  func add(newBook: BinanceBookForPair) {
+    
+    if var book = self.books[newBook.symbol] {
+      
+      for ask in newBook.asks {
+        let price = ask.key
+        let quantity = ask.value
+        quantity.int == 0 ? (book.asks[price] = nil) : (book.asks[price] = quantity)
+      }
+      
+      for bid in newBook.bids {
+        let price = bid.key
+        let quantity = bid.value
+        quantity.int == 0 ? (book.bids[price] = nil) : (book.bids[price] = quantity)
+      }
+      
+      self.books[newBook.symbol] = book
+      
+    } else {
+      var pairBook = PairBook()
+      pairBook.symbol = newBook.symbol
+      pairBook.asks = newBook.asks
+      pairBook.bids = newBook.bids
+      self.books[newBook.symbol] = pairBook
+    }
+    
+  }
+  
+  
 }
