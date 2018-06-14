@@ -25,7 +25,7 @@ class AppDelegate {
     binanceWs.start(self.app) { binanceBook in
       self.exchangesBooks[.binance] = binanceBook
       
-      print(self.exchangesBooks[.binance]?.values)
+      print(self.exchangesBooks[.binance])
       
     }
   }
