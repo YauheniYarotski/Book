@@ -37,13 +37,13 @@ class BinanceWs {
       for ask in newBook.asks {
         let price = ask.key
         let quantity = ask.value
-        quantity.int == 0 ? (book.asks[price] = nil) : (book.asks[price] = quantity)
+        quantity.double == 0 ? (book.asks[price] = nil) : (book.asks[price] = quantity)
       }
       
       for bid in newBook.bids {
         let price = bid.key
         let quantity = bid.value
-        quantity.int == 0 ? (book.bids[price] = nil) : (book.bids[price] = quantity)
+        quantity.double == 0 ? (book.bids[price] = nil) : (book.bids[price] = quantity)
       }
       
       self.books[newBook.symbol] = book

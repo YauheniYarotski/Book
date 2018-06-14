@@ -9,8 +9,10 @@ import Foundation
 
 extension String {
   
-  var int: Int {
-    return Int(self) ?? 0
+  var double: Double {
+//    print(self)
+//    print(Double(self))
+    return Double(self) ?? 0
   }
   
   var boolValue: Bool {
