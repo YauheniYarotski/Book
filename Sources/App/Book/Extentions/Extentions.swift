@@ -10,11 +10,7 @@ import Foundation
 extension String {
   
   var int: Int {
-    if self.isEmpty {
-      return 0
-    } else {
-      return (self as NSString).integerValue
-    }
+    return Int(self) ?? 0
   }
   
   var boolValue: Bool {
