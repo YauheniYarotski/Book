@@ -19,7 +19,7 @@ class AppDelegate {
   
   
   func start() {
-    binanceWs.start()
+    binanceWs.start(self.app)
   }
   
 }
