@@ -10,24 +10,6 @@ import Vapor
 import ObjectMapper
 import Console
 
-//{
-//  "event":"ping",
-//  "cid": 1234
-//}
-
-class BitfinexPingRequest: Mappable {
-  var event: String = "ping"
-  var cid: Int = 1234
-  init() {
-  }
-  required init?(map: Map) {
-  }
-  
-  func mapping(map: Map) {
-    event             <- map["event"]
-  }
-  
-}
 
 class BitfinexRequest: Mappable {
   var event: String = "subscribe"
@@ -50,6 +32,20 @@ class BitfinexRequest: Mappable {
   
 }
 
+
+class BitfinexPingRequest: Mappable {
+  var event: String = "ping"
+  init() {
+  }
+  required init?(map: Map) {
+  }
+  
+  func mapping(map: Map) {
+    event             <- map["event"]
+  }
+  
+}
+
 class BitfinexWs {
   
   var books = ExchangeBook()
@@ -63,7 +59,9 @@ class BitfinexWs {
       ws.send(text)
       
       ws.onText { ws, text in
-        print("Text: ", text)      }
+        print("Text: ", text)
+        
+      }
       
       ws.onBinary({ (ws, data) in
         print("Binary: ", data)
