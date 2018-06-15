@@ -51,12 +51,13 @@ class BitfinexWs {
   var books = ExchangeBook()
   
   func start(_ app: Application, onResponse:@escaping ((_ books: ExchangeBook)->())) {
-    _ = HTTPClient.webSocket(scheme: .wss, hostname: "api.bitfinex.com", path: "/ws/2/", on: app).map{ ws in
+    _ = HTTPClient.webSocket(scheme: .wss, hostname: "api.bitfinex.com", path: "/ws" , on: app).map{ ws in
       
       let request = BitfinexPingRequest()
       let text = request.toJSONString(prettyPrint: false)!
       print(text)
-      ws.send(text)
+//      ws.send(text)
+      ws.send(text: text)
       
       ws.onText { ws, text in
         print("Text: ", text)
