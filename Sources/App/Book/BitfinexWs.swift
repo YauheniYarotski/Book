@@ -46,36 +46,46 @@ class BitfinexPingRequest: Mappable {
   
 }
 
+
+
 class BitfinexWs {
   
   var books = ExchangeBook()
   
   func start(_ app: Application, onResponse:@escaping ((_ books: ExchangeBook)->())) {
-    _ = HTTPClient.webSocket(scheme: .wss, hostname: "api.bitfinex.com", path: "/ws" , on: app).map{ ws in
-      
-      let request = BitfinexPingRequest()
-      let text = request.toJSONString(prettyPrint: false)!
-      print(text)
-//      ws.send(text)
-      ws.send(text: text)
-      
+    _ = HTTPClient.webSocket(scheme: .wss, hostname: "api.bitfinex.com", path: "/ws/2" , on: app).map{ ws in
+      let payload = "{\"event\":\"ping\"}"
+      print(payload)
+      ws.send(payload)
       ws.onText { ws, text in
         print("Text: ", text)
-        
       }
-      
-      ws.onBinary({ (ws, data) in
-        print("Binary: ", data)
-      })
       ws.onError{ (ws, error) in
         print("Error: ", error)
       }
-      
       ws.onCloseCode({ (wsCode) in
         print("close: ", wsCode)
       })
     }
   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 //  func add(newBook: BinanceBookForPair) {
 //
