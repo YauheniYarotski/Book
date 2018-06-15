@@ -11,6 +11,7 @@ import Vapor
 class AppDelegate {
   
   let binanceWs = BinanceWs()
+  let bitfinexWs = BitfinexWs()
   let app: Application
   
   var exchangesBooks = [Exchange : ExchangeBook]()
@@ -22,12 +23,19 @@ class AppDelegate {
   
   func start() {
     
-    binanceWs.start(self.app) { binanceBook in
-      self.exchangesBooks[.binance] = binanceBook
-      
-      print(self.exchangesBooks[.binance])
-      
+//    binanceWs.start(self.app) { binanceBook in
+//      self.exchangesBooks[.binance] = binanceBook
+//      
+////      print(self.exchangesBooks[.binance])
+//      
+//    }
+    
+    bitfinexWs.start(self.app) { book in
+      print(book)
     }
+    
+    
+    
   }
   
 }

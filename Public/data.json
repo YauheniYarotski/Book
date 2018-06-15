@@ -1,0 +1,6 @@
+{
+   "event":"subscribe",
+   "channel":"book",
+   "symbol":"BTCUSD",
+   "prec":"P0"
+}
