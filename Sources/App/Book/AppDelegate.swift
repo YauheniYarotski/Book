@@ -10,15 +10,13 @@ import Vapor
 
 class AppDelegate {
   
-  
+  static let shared = AppDelegate()
   //  let bitfinexWs = BitfinexWs()
-  let app: Application
+  var app: Application!
   let mainManager = MainManager()
   
   
-  init(_ app: Application) {
-    self.app = app
-//    app.eventLoop.sh
+  init() {
   }
   
   
