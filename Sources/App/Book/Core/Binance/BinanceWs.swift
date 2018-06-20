@@ -11,7 +11,7 @@ import Console
 
 class BinanceWs {
   
-  let worker = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+  let worker = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
   
   func start(onResponse:@escaping ((_ binanceNewLevels: [String: BinanceBookForPair])->())) {
     _ = HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: worker).map{ ws in
