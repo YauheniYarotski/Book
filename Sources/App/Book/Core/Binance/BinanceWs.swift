@@ -10,9 +10,7 @@ import ObjectMapper
 import Console
 
 class BinanceWs {
-  
-  let worker = MultiThreadedEventLoopGroup(numberOfThreads: System.coreCount)
-  
+    
   func start(onResponse:@escaping ((_ binanceNewLevels: [String: BinanceBookForPair])->())) {
     _ = HTTPClient.webSocket(scheme: .wss, hostname: "stream.binance.com", port: 9443, path: "/ws/btcusdt@depth", on: AppDelegate.shared.app).map{ ws in
       ws.onText { ws, text in
