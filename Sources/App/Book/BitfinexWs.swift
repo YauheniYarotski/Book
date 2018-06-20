@@ -39,37 +39,52 @@ class BitfinexPingRequest: Mappable {
   }
   required init?(map: Map) {
   }
-  
+
   func mapping(map: Map) {
     event             <- map["event"]
   }
-  
+
 }
 
 
+//final class BitfinexPingRequest: Codable {
+//  var event: String
+//
+//  init(event: String) {
+//    self.event = event
+//  }
+//}
 
-class BitfinexWs {
-  
-  var books = ExchangeBook()
-  
-  func start(_ app: Application, onResponse:@escaping ((_ books: ExchangeBook)->())) {
-    _ = HTTPClient.webSocket(scheme: .wss, hostname: "api.bitfinex.com", path: "/ws/2" , on: app).map{ ws in
-      let payload = "{\"event\":\"ping\"}"
-      print(payload)
-      ws.send(payload)
-      ws.onText { ws, text in
-        print("Text: ", text)
-      }
-      ws.onError{ (ws, error) in
-        print("Error: ", error)
-      }
-      ws.onCloseCode({ (wsCode) in
-        print("close: ", wsCode)
-      })
-    }
-  }
-  
-  
+//extension BitfinexPingRequest: Content {}
+//extension User: Migration {}
+
+
+
+//class BitfinexWs {
+//
+//  var books =[String: PairBook]()
+//
+//  func start(_ app: Application, onResponse:@escaping ((_ books: [String: PairBook])->())) {
+//
+//    _ = HTTPClient.webSocket(scheme: .wss, hostname: "api.bitfinex.com", path: "/ws/2", on: app).map{ ws in
+////      let payload = "{\"event\":\"ping\"}"
+//      let payload = BitfinexPingRequest().toJSONString()!
+//      print(payload)
+//
+//      ws.onText { ws, text in
+//        print("Text: ", text)
+//      }
+//      ws.onError{ (ws, error) in
+//        print("Error: ", error)
+//      }
+//      ws.onCloseCode({ (wsCode) in
+//        print("close: ", wsCode)
+//      })
+//      ws.send(payload)
+//      }
+//  }
+//
+
   
   
   
@@ -116,4 +131,4 @@ class BitfinexWs {
 //  }
   
   
-}
+//}

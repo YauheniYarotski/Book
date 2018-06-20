@@ -6,16 +6,25 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     /// Register providers first
 //    try services.register(FluentSQLiteProvider())
 
+
+
+  
+  
     /// Register routes to the router
     let router = EngineRouter.default()
     try routes(router)
     services.register(router, as: Router.self)
+  
+  let websockets = NIOWebSocketServer.default()
+  //  websockets.register(route: <#T##Route<WebSocketResponder>#>)
+  websockets.get("socket", use: chatterHandler)
+  services.register(websockets, as: WebSocketServer.self)
 
     /// Register middleware
-    var middlewares = MiddlewareConfig() // Create _empty_ middleware config
-    /// middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
-    middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
-    services.register(middlewares)
+//    var middlewares = MiddlewareConfig() // Create _empty_ middleware config
+//    /// middlewares.use(FileMiddleware.self) // Serves files from `Public/` directory
+//    middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
+//    services.register(middlewares)
 
     // Configure a SQLite database
 //    let sqlite = try SQLiteDatabase(storage: .memory)
@@ -30,8 +39,5 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 //    migrations.add(model: Todo.self, database: .sqlite)
 //    services.register(migrations)
   
-//  let websockets = NIOWebSocketServer.default()
-//  websockets.get("socket", use: chatterHandler)
-//  services.register(websockets, as: WebSocketServer.self)
 
 }

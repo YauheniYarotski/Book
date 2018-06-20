@@ -10,32 +10,20 @@ import Vapor
 
 class AppDelegate {
   
-  let binanceWs = BinanceWs()
-  let bitfinexWs = BitfinexWs()
-  let app: Application
   
-  var exchangesBooks = [Exchange : ExchangeBook]()
+  //  let bitfinexWs = BitfinexWs()
+  let app: Application
+  let mainManager = MainManager()
+  
   
   init(_ app: Application) {
     self.app = app
+//    app.eventLoop.sh
   }
   
   
   func start() {
-    
-//    binanceWs.start(self.app) { binanceBook in
-//      self.exchangesBooks[.binance] = binanceBook
-//      
-////      print(self.exchangesBooks[.binance])
-//      
-//    }
-    
-    bitfinexWs.start(self.app) { book in
-      print(book)
-    }
-    
-    
-    
+    mainManager.start()
   }
   
 }

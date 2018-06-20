@@ -76,22 +76,29 @@ class BinanceBookForPair: Mappable {
     return "\(asks.count)"
   }
   
-  
-  
 }
 
-//struct ExchangeBook {
-//  var exchange: Exchange = .none
-//  var books: [String: PairBook] = [:]
-//}
 
-typealias ExchangeBook = [String: PairBook]
 
-struct PairBook {
+struct PairBook: Mappable {
   var timeStamp: Date = Date()
   var symbol: String = ""
   var bids : [String: String] = [:]
   var asks : [String: String] = [:]
+  
+  init() {
+    
+  }
+  
+  init?(map: Map) {
+  }
+  
+  mutating func mapping(map: Map) {
+    timeStamp          <- map["timeStamp"]
+    symbol             <- map["symbol"]
+    bids               <- map["bids"]
+    asks               <- map["asks"]
+  }
   
 }
 
@@ -100,7 +107,30 @@ enum Exchange: String {
   case binance = "Binance"
   case bitfinex = "Bitfinex"
   case none = "none"
+  
 }
+
+
+
+class WsExchangeBooksResponse: Mappable {
+  var exchange: Exchange = .none
+  var book: [String: PairBook] = [:]
+  
+  init(exchange :Exchange, book : [String: PairBook]) {
+    self.exchange = exchange
+    self.book = book
+  }
+  
+  required init?(map: Map) {
+  }
+  
+  func mapping(map: Map) {
+    exchange <- (map["exchange"],EnumTransform<Exchange>())
+    book                <- map["book"]
+  }
+  
+}
+
 
 //extension Ticker: Hashable {
 //  static func == (lhs: Ticker, rhs: Ticker) -> Bool {
