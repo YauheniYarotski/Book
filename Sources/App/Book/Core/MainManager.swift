@@ -46,7 +46,7 @@ class MainManager {
     
 
         let jsonString = wsBooks.toJSONString() ?? "no ws"
-        print(jsonString.prefix(100))
+        print(jsonString)
     websocketSendToAll(jsonString)
     }
   
