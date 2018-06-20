@@ -30,7 +30,9 @@ class ExchangesManager {
   }
   
   func getDataFromExchanges() {
+    if !binanceManager.book.isEmpty {
     exchangesWithBooks[.binance] = binanceManager.book
+    }
   }
   
 }

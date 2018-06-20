@@ -38,6 +38,7 @@ class MainManager {
   
   private func sendToWs() {
     let books = agregator.exchangesBooks
+    if !books.isEmpty {
     var wsBooks = [WsExchangeBooksResponse]()
     for (ex, book) in books {
       let ws = WsExchangeBooksResponse(exchange: ex, book: book)
@@ -48,6 +49,7 @@ class MainManager {
         let jsonString = wsBooks.toJSONString() ?? "no ws"
         print(jsonString)
     websocketSendToAll(jsonString)
+    }
     }
   
 }
