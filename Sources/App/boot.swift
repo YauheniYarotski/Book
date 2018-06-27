@@ -7,7 +7,7 @@ public func boot(_ app: Application) throws {
   
   let appDelegate = AppDelegate.shared
   appDelegate.app = app
-//  appDelegate.start()
+  appDelegate.start()
   
 }
 

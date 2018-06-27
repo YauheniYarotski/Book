@@ -15,8 +15,8 @@ class MainManager {
   
   func start() {
     exchangesManager.startGetingData()
-    startCollectionDataFromExchanges()
-    startSendingDataToWs()
+//    startCollectionDataFromExchanges()
+//    startSendingDataToWs()
   }
   
   
